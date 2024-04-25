@@ -1,6 +1,9 @@
 # Ignore Python virtual environment
 backend/myenv/
 
+# Ignore node modules
+frontend/node_modules/
+
 
 # Ignore SQLite database file
 *.sqlite3
