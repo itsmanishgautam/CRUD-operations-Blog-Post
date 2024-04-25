@@ -1,0 +1,13 @@
+# Ignore Python virtual environment
+backend/myenv/
+
+
+# Ignore SQLite database file
+*.sqlite3
+
+# Ignore IDE or editor-specific files
+.vscode/
+*.pyc
+
+# Ignore environment files
+.env
