@@ -20,7 +20,7 @@ from workingcode.views import PostList
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('', PostList.as_view(), name='postreact')
+    path('api/posts/', PostList.as_view(), name='post-list')
 ]
 
 

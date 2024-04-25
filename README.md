@@ -16,3 +16,12 @@
 3. Set up components, like `App.js`, to display data.
 4. Use Axios to fetch data from the Django backend, typically in `componentDidMount`.
 5. Render the fetched data in the React components.
+
+
+
+npm install axios
+pip install rest_framework
+myenv\Scripts\activate
+npm start
+python manage.py runserver
+python -m venv myenv
