@@ -15,13 +15,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path,include
+from django.urls import path
+from django.views.generic.base import RedirectView
 from workingcode.views import PostList
 from workingcode.views import PostDetail
+from workingcode.views import PostDelete
 
 
 urlpatterns = [
+    path('', RedirectView.as_view(url='api/posts/'), name='root-redirect'),
     path('api/posts/', PostList.as_view(), name='post-list'),
+    path('api/posts/<int:pk>/delete/', PostDelete.as_view(), name='post-delete'),
     path('api/posts/<int:pk>/', PostDetail.as_view(), name='post-detail'),
     path("admin/", admin.site.urls),
 ]

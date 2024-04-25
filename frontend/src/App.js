@@ -59,7 +59,7 @@ function App() {
 
 
   const handleDeleteClick = (postId) => {
-    axios.delete(`http://localhost:8000/api/posts/${postId}/`)
+    axios.delete(`http://localhost:8000/api/posts/${postId}/delete`)
       .then(response => {
         console.log('Post deleted successfully:', response.data);
         fetchPosts();
@@ -100,30 +100,32 @@ function App() {
       <ul className="list-group mt-4">
         {posts.map(post => (
           <li key={post.id} className="list-group-item">
-            <h2>{post.title}</h2>
-            <p>{post.content}</p>
-            <button className="btn btn-primary me-2" onClick={() => handleEditClick(post)}>Edit</button>
-            <button className="btn btn-danger" onClick={() => handleDeleteClick(post.id)}>Delete</button>
+            {editingPost && editingPost.id === post.id ? (
+              <div>
+                <h2>Edit Post</h2>
+                <form onSubmit={handleEditFormSubmit}>
+                  <div className="mb-3">
+                    <label htmlFor="editTitle" className="form-label">Title:</label>
+                    <input type="text" id="editTitle" className="form-control" name="title" value={editFormData.title} onChange={handleEditFormChange} />
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="editContent" className="form-label">Content:</label>
+                    <textarea id="editContent" className="form-control" name="content" value={editFormData.content} onChange={handleEditFormChange} />
+                  </div>
+                  <button type="submit" className="btn btn-primary">Update</button>
+                </form>
+              </div>
+            ) : (
+              <div>
+                <h2>{post.title}</h2>
+                <p>{post.content}</p>
+                <button className="btn btn-primary me-2" onClick={() => handleEditClick(post)}>Edit</button>
+                <button className="btn btn-danger" onClick={() => handleDeleteClick(post.id)}>Delete</button>
+              </div>
+            )}
           </li>
         ))}
       </ul>
-      {/* Edit form */}
-      {editingPost && (
-        <div className="mt-4">
-          <h2>Edit Post</h2>
-          <form onSubmit={handleEditFormSubmit}>
-            <div className="mb-3">
-              <label htmlFor="editTitle" className="form-label">Title:</label>
-              <input type="text" id="editTitle" className="form-control" name="title" value={editFormData.title} onChange={handleEditFormChange} />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="editContent" className="form-label">Content:</label>
-              <textarea id="editContent" className="form-control" name="content" value={editFormData.content} onChange={handleEditFormChange} />
-            </div>
-            <button type="submit" className="btn btn-primary">Update</button>
-          </form>
-        </div>
-      )}
       {/* New post form */}
       <div className="mt-4">
         <h2>Add New Post</h2>
