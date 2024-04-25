@@ -17,10 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from workingcode.views import PostList
+from workingcode.views import PostDetail
+
 
 urlpatterns = [
+    path('api/posts/', PostList.as_view(), name='post-list'),
+    path('api/posts/<int:pk>/', PostDetail.as_view(), name='post-detail'),
     path("admin/", admin.site.urls),
-    path('api/posts/', PostList.as_view(), name='post-list')
 ]
-
-
