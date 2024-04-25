@@ -5,6 +5,10 @@ from rest_framework.views import APIView
 from .models import Post
 from .serializers import PostSerializer
 
+from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
+
+
 class PostList(APIView):
     def get(self, request):
         posts = Post.objects.all().order_by('-date')  # Order by latest first
@@ -18,12 +22,18 @@ class PostList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 class PostDetail(APIView):
     def get_object(self, pk):
         try:
             return Post.objects.get(pk=pk)
         except Post.DoesNotExist:
             raise Http404
+
+    def get(self, request, pk):
+        post = self.get_object(pk)
+        serializer = PostSerializer(post)
+        return Response(serializer.data)
 
     def put(self, request, pk):
         post = self.get_object(pk)
@@ -32,7 +42,11 @@ class PostDetail(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
+
+
+
+
 
 class PostDelete(APIView):
     def get_object(self, pk):
@@ -45,3 +59,9 @@ class PostDelete(APIView):
         post = self.get_object(pk)
         post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+def get_post_detail(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    serializer = PostSerializer(post)
+    return JsonResponse(serializer.data)

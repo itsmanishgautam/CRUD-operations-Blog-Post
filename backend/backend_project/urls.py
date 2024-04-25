@@ -20,6 +20,7 @@ from django.views.generic.base import RedirectView
 from workingcode.views import PostList
 from workingcode.views import PostDetail
 from workingcode.views import PostDelete
+from workingcode import views
 
 
 urlpatterns = [
@@ -28,4 +29,5 @@ urlpatterns = [
     path('api/posts/<int:pk>/delete/', PostDelete.as_view(), name='post-delete'),
     path('api/posts/<int:pk>/', PostDetail.as_view(), name='post-detail'),
     path("admin/", admin.site.urls),
+    path('posts/<int:post_id>/',views.get_post_detail, name='get_post_detail'),
 ]
