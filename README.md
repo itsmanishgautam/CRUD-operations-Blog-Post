@@ -6,6 +6,8 @@
 4. Define views (`views.py`) to handle GET and POST requests.
 5. Configure URLs (`urls.py`) for API endpoints.
 6. Adjust `settings.py` to include `rest_framework`, `corsheaders`, and configure CORS settings.
+7. pip install django-cors-headers
+8. pip install djangorestframework
 
 ### Frontend (React)
 
